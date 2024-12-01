@@ -32,6 +32,7 @@ class ProjectController extends Controller
             'data' => $projects->paginate(10)
         ], 200);
     }
+    
     public function store(Request $request)
     {
 
