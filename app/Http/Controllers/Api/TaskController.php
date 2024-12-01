@@ -41,7 +41,7 @@ class TaskController extends Controller
                 TaskMember::query()->create([
                     'projectId' => $request->projectId,
                     'taskId' => $task->id,
-                    'memberIds' => $members[$i]
+                    'memberId' => $members[$i]
                 ]);
             } 
 
@@ -49,6 +49,61 @@ class TaskController extends Controller
                 'message' => 'task created'
             ],200);
         });
+    }
+
+    public function TaskToNotStartedToPending(Request $request)
+    { 
+        Task::changeTaskStatus($request->taskId,  Task::PENDING);
+
+        return response([
+            'message' => 'move task to pending'
+        ], 200);
+
+    }
+
+    public function TaskToNotStartedToCompleted(Request $request)
+    {
+        Task::changeTaskStatus($request->taskId, Task::COMPLETED);
+
+        return response([
+            'message' => 'move task to completed'
+        ], 200);
+    }
+
+    public function TaskToPendingToCompleted(Request $request)
+    {
+        Task::changeTaskStatus($request->taskId, Task::COMPLETED);
+
+        return response([
+            'message' => 'move task to completed'
+        ], 200);
+    }
+
+    public function TaskToPendingToNotStarted(Request $request)
+    {
+        Task::changeTaskStatus($request->taskId, Task::NOT_STARTED);
+
+        return response([
+            'message' => 'move task to not started'
+        ], 200);
+    }
+
+    public function TaskToCompletedToPending(Request $request)
+    {
+        Task::changeTaskStatus($request->taskId, Task::PENDING);
+
+        return response([
+            'message' => 'move task to pending'
+        ], 200);
+    }
+
+    public function TaskToCompletedToNotStarted(Request $request)
+    {
+        Task::changeTaskStatus($request->taskId, Task::NOT_STARTED);
+
+        return response([
+            'message' => 'move task to not completed'
+        ], 200);
     }
   
 }

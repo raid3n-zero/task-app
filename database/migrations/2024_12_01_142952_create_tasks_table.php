@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->interger('projectId');
+            $table->integer('projectId');
             $table->string('name');
             $table->integer('status');
             $table->timestamps();
