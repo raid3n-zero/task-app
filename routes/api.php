@@ -10,15 +10,21 @@ Route::get('/user', function (Request $request){
     return $request->user();
 })->middleware('auth');
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+
+// auth
+Route::controller(AuthController::class)->group( function (){
+
+    Route::post('/register', 'register');
+    Route::post('/login',  'login');
+});
 
 // projects
-Route::get('/projects', [ProjectController::class, 'index']);
-Route::post('/projects', [ProjectController::class, 'store']);
-Route::put('/projects', [ProjectController::class, 'update']);
-
-Route::post('/projects/pinned', [ProjectController::class, 'pinnedProject']);
+Route::controller(ProjectController::class)->group(function(){
+    Route::get('/projects' , 'index');
+    Route::post('/projects',  'store');
+    Route::put('/projects', 'update');
+    Route::post('/projects/pinned', 'pinnedProject');
+});
 
 
 
