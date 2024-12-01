@@ -42,7 +42,8 @@ class sendEmailVerfication extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.EmailVerfication.blade.php',
+            
+            view: 'mail.EmailVerfication',
             with: ['user' => $this->user],
         );
     }
