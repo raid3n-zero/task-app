@@ -12,6 +12,17 @@ use App\Models\Project;
 class ProjectController extends Controller
 {
 
+    
+    public function getProject(Request $request, $slug)
+    {
+        $projects = Project::query()->with(['tasks.taskMembers.member'])->
+        where('projects.slug', $slug)->first();
+
+        return response([
+            'data' => $projects
+        ], 200);
+    }
+
     public function index(Request $request)
     {
 
@@ -32,7 +43,7 @@ class ProjectController extends Controller
             'data' => $projects->paginate(10)
         ], 200);
     }
-    
+
     public function store(Request $request)
     {
 
@@ -110,7 +121,7 @@ class ProjectController extends Controller
 
         if($errors->fails())
         {
-            return response($errors->errors()->all());
+            return response($errors->errors()->all(), 422);
         }
 
         TaskProgress::where('projectId', $request->projectId)->update([
